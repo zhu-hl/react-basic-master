@@ -1,0 +1,34 @@
+.app-wrapper {
+  min-height: 100vh;
+  .app-header {
+    background: #FFFFFF;
+    .header-personal {
+      text-align: right;
+      .ant-dropdown-link {
+        cursor: pointer;
+      }
+    }
+  }
+  .app-sidebar {
+    .sidebar-scrollbar > div:first-child {
+      margin-right: -19px !important;
+      margin-bottom: -19px !important;
+    }
+    .logo {
+      height: 64px;
+      line-height: 64px;
+      color: #FFFFFF;
+      font-weight: bold;
+      text-align: center;
+      font-size: 18px;
+      overflow: hidden;
+    }
+  }
+  .app-main {
+    padding: 15px;
+    height: 100%;
+    .custom-scrollbar {
+      background: #FFFFFF;
+    }
+  }
+}

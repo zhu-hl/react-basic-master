@@ -37,7 +37,7 @@ const validateList = {
   },
   password: {
     type: VALIDATE_TYPE.REGEXP,
-    reg: /^[A-Z0-9\_]*$/i,
+    reg: /^[A-Z0-9_]*$/i,
     errMsg: '密码只能是数字字母下划线组合'
   },
   ip: {
@@ -84,91 +84,95 @@ const validateList = {
     }
   }
 }
+/**
+ * Form.Item
+ * validateFirst:当某一规则校验不通过时，是否停止剩下的规则的校验
+ * default false
+ */
 const validateType = {
-  number: '只能是数字',
-  array: '至少选择一个'
+  number: '请输入数字',
+  email: '请输入正确邮箱',
+  array: '请至少选择一个'
 }
-const validate = (type, options, rule, value, callback) => {
-  if (value !== null && value !== '') { // If has value
-    const validateObj = validateList[type] || {}
-    const errMsg = options.errMsg || validateObj.errMsg
-    if (validateObj.type === VALIDATE_TYPE.REGEXP) {
-      // call validateRegexp method
-      validateRegexp(validateObj, value, errMsg, callback)
-      return
+const validate = async(type, options, rule, value) => {
+  return new Promise((resolve, reject) => {
+    if (value !== null && value !== '') { // If has value
+      const validateObj = validateList[type] || {}
+      const errMsg = options.errMsg || validateObj.errMsg
+      if (validateObj.type === VALIDATE_TYPE.REGEXP) {
+        // call validateRegexp method
+        validateRegexp(validateObj, value, errMsg, resolve, reject)
+        return
+      }
+      if (validateObj.type === VALIDATE_TYPE.FUNCTION) {
+        validateFunction(validateObj, value, errMsg, resolve, reject)
+        return
+      }
+      if (validateObj.type === VALIDATE_TYPE.COMPARE) {
+        validateCompare(validateObj, value, errMsg, resolve, reject, options)
+        return
+      }
+      resolve()
+    } else {
+      resolve()
     }
-    if (validateObj.type === VALIDATE_TYPE.FUNCTION) {
-      validateFunction(validateObj, value, errMsg, callback)
-      return
-    }
-    if (validateObj.type === VALIDATE_TYPE.COMPARE) {
-      validateCompare(validateObj, value, errMsg, callback, options)
-      return
-    }
-    callback()
-  } else {
-    callback()
-  }
+  })
 }
 
-function validateRegexp(validateObj, value, errMsg, callback) {
+function validateRegexp(validateObj, value, errMsg, resolve, reject) {
   if (!validateObj.reg.test(value)) {
     // if not match regexp
-    callback({ message: errMsg })
+    reject({ message: errMsg })
   } else {
-    callback()
+    resolve()
   }
 }
 
-function validateFunction(validateObj, value, errMsg, callback) {
+function validateFunction(validateObj, value, errMsg, resolve, reject) {
   if (!validateObj.fn(value)) {
     // if not match the fn result
-    callback({ message: errMsg })
+    reject({ message: errMsg })
   } else {
-    callback()
+    resolve()
   }
 }
 
-function validateCompare(validateObj, value, errMsg, callback, options) {
+function validateCompare(validateObj, value, errMsg, resolve, reject, options) {
   // if is compare
   if (options.compare && !options.compare.bind(this, value)()) {
-    callback({ message: errMsg })
+    reject({ message: errMsg })
     return
   }
   if (options.hasOwnProperty('max') && !validateObj.fn.bind(this, value, options.max)()) {
-    callback({ message: errMsg + options.max })
+    reject({ message: errMsg + options.max })
     return
   }
   if (options.hasOwnProperty('min') && !validateObj.fn.bind(this, value, options.min)()) {
-    callback({ message: errMsg + options.min })
+    reject({ message: errMsg + options.min })
     return
   }
-  callback()
+  resolve()
 }
 
 export default function(item) {
   const rules = []
   if (item.required) {
-    rules.push({ required: true, whitespace: item.whitespace, message: item.message || '必填字段', trigger: item.trigger || 'blur' })
+    rules.push({ required: true, whitespace: item.whitespace, message: item.message || '必填字段' })
   }
   if (item.hasOwnProperty('maxLength')) {
-    rules.push({ max: item.maxLength, message: '超出最大长度' + item.maxLength, trigger: item.trigger || 'blur' })
+    rules.push({ max: item.maxLength, message: '超出最大长度' + item.maxLength })
   }
   if (item.hasOwnProperty('minLength')) {
-    rules.push({ min: item.minLength, message: '小于最小长度' + item.minLength, trigger: item.trigger || 'blur' })
+    rules.push({ min: item.minLength, message: '小于最小长度' + item.minLength })
   }
   if (item.hasOwnProperty('type')) {
-    rules.push({ type: item.type, message: validateType[item.type], trigger: item.trigger || 'blur' })
+    rules.push({ type: item.type, message: validateType[item.type] })
   }
   if (item.hasOwnProperty('options')) {
     item.options.forEach(i => {
       const type = i.type || i
       const options = i.options || {}
-      let trigger = 'blur'
-      if (i.options && i.options.trigger) {
-        trigger = i.options.trigger
-      }
-      rules.push({ validator: validate.bind(this, type, options), trigger: trigger })
+      rules.push({ validator: validate.bind(this, type, options) })
     })
   }
   return rules

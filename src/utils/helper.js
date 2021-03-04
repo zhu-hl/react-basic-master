@@ -1,3 +1,5 @@
+import { notification, message, Modal } from 'antd'
+
 // check if Json
 function isJson(data) {
   try {
@@ -58,34 +60,39 @@ export function getOptioinsName(val, list) {
   return name
 }
 
-// 弹出操作确认框
-export function confirm(owner, opts = { type: 'warning' }) {
-  const msgboxOptions = {
-    type: 'warning',
-    title: opts.title || '删除',
-    message: opts.message || '确认删除该条记录吗?',
-    showCancelButton: true,
-    cancelButtonText: '取消',
-    confirmButtonText: '确认'
-  }
-  return new Promise((resolve) => {
-    owner.$msgbox(msgboxOptions).then(() => {
-      resolve()
-    }).catch(() => {
-    })
-  })
-}
-
 // Notification 通知
-export function notify(owner, opts = {}) {
+export function notify(opts = {}) {
   opts = {
     title: '成功',
     type: 'success',
     ...opts
   }
-  owner.$notify({
-    title: opts.title,
-    message: opts.message,
-    type: opts.type
+  notification[opts.type]({
+    message: opts.title,
+    description: opts.message,
   })
+}
+
+// message 提示
+export function messageFn(opts = {}) {
+  opts = {
+    type: 'success',
+    ...opts
+  }
+  message[opts.type]({
+    message: opts.title,
+    content: opts.message,
+  })
+}
+
+// 弹出操作确认框
+export function confirm(opts = {}) {
+  const options = {
+    title: opts.title || '确认删除该条记录吗?',
+    okText: opts.okText || '确认',
+    cancelText: opts.cancelText || '取消',
+    onOk: opts.onOk,
+    onCancel: opts.onCancel
+  }
+  Modal.confirm(options)
 }

@@ -1,42 +1,99 @@
-$label-width: 220px; // 表单label宽度
 body {
+  margin: 0;
   height: 100%;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: MarkOffc-m, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-  // font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-  margin: 0
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
   height: 100%;
   box-sizing: border-box;
-  font-size: 14px;
 }
 
-#app{
-  height: 100%;
-  overflow: hidden;
+#root{
+  min-height: 100%;
+  height: auto;
 }
 
+#loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-size: 20px;
+}
+
+$label-width: 220px; // 表单label宽度
+$modal-label-width: 110px; // Modal表单label宽度
 .wrapper-container {
   padding: 10px;
-  .page-title {
-    font-size: 16px;
-    color: #606266;
-  }
-  .add-edit-form, .detail-form {
-    .el-form-item {
-      width: 100%;
-      text-align: left;
-      &__content {
-        width: 60%;
-        max-width: calc(100% - #{$label-width});
+  .search-form {
+    .ant-form-item {
+      margin-bottom: 10px;
+      .ant-select {
+        width: 178px;
       }
     }
   }
-  .submit-btn-area {
-    text-align: center;
+  .page-title {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .add-edit-form {
+    .ant-form-item {
+      margin-right: 10px;
+      .ant-form-item-label {
+        width: $label-width;
+      }
+    }
+    .submit-btn-area {
+      text-align: center;
+    }
+  }
+}
+/*
+ * Modal styles
+ */
+.ant-modal-content {
+  .ant-modal-body {
+    .modal-form {
+      .ant-form-item {
+        margin-right: 10px;
+        .ant-form-item-label {
+          width: $modal-label-width;
+        }
+      }
+    }
+  }
+}
+
+.basic-table {
+  .operation-area {
+    text-align: right;
+    .ant-btn {
+      margin-left: 16px;
+      margin-bottom: 10px;
+    }
+  }
+  .ant-table-wrapper {
+    .table-operation > .ant-btn-link {
+      padding: 4px 8px;
+      .anticon + span {
+        margin: 0px;
+      }
+    }
+  }
+  .ant-pagination {
+    margin-top: 15px;
+    text-align: right;
   }
 }

@@ -1,8 +1,8 @@
 import service from '../index'
 import Mock from 'mockjs'
 
-Mock.mock(/\/user\/list/, 'get', require('../data/system/user/list.json'))
-Mock.mock(/\/user\/detail/, 'get', require('../data/system/user/detail.json'))
+Mock.mock(/\/user\/list/, 'get', require('../data/system/userList.json'))
+Mock.mock(/\/user\/detail/, 'get', require('../data/system/userDetail.json'))
 Mock.mock(/\/user\/add/, 'post', { success: true, message: 'Successfully' })
 Mock.mock(/\/user\/update/, 'post', { success: true, message: 'Successfully' })
 Mock.mock(/\/user\/delete/, 'post', { success: true, message: 'Successfully' })

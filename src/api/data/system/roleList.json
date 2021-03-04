@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "message": "查询角色列表成功",
+  "data": {
+    "list":[
+      {
+        "roleId": "HZ14272",
+        "roleName": "超级管理员",
+        "remark": "test user"
+      },
+      {
+        "roleId": "ZW14271",
+        "roleName": "普通管理员",
+        "remark": "test manager"
+      },
+      {
+        "roleId": "QWE1312",
+        "roleName": "部门经理",
+        "remark": "test project manager"
+      }
+    ],
+    "total": 3,
+    "pageNumber": 1
+  }
+}

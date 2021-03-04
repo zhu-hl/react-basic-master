@@ -1,0 +1,30 @@
+.login-container {
+  height: 100vh;
+  background: url("../../assets/img/bg_login.jpg") #2d3a4b no-repeat;
+  background-size: cover;
+  .login-form {
+    width: 400px;
+    height: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    .form-title {
+      font-size: 25px;
+      color: #FFFFFF;
+      line-height: 80px;
+      text-align: center;
+    }
+    .form-container {
+      width: 80%;
+      margin: 0 auto;
+    }
+    .form-area {
+      margin-top: 20px;
+      .el-button {
+        width: 100%;
+      }
+    }
+  }
+}

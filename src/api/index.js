@@ -1,6 +1,7 @@
 import axios from 'axios'
+import baseURL from './baseUrl'
 import { showLoading, hideLoading } from './loading.js'
-import { Notification, MessageBox } from 'element-ui'
+import { notification } from 'antd'
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -19,60 +20,50 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。'
 }
-const axiosInstance = axios.create({
-  baseURL: process.env.VUE_APP_BASEURL,
-  headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Cache-Control': 'no-cache', 'BsmAjaxHeader': true },
-  timeout: 20000
-})
-
 // 报错处理
 const handleError = function(response) {
+  console.log(response)
   const errorText = codeMessage[response.status] || response.statusText
-  Notification({
-    type: 'error',
-    title: `请求错误 ${response.status}: ${response.config.url}`,
-    message: errorText
-  })
-  const error = new Error(errorText)
-  error.name = response.status
-  error.response = response
-  throw error
+  notification.error({
+    message: errorText,
+    description: `请求错误 ${response.status}: ${response.config.url}`,
+  });
 }
-axiosInstance.interceptors.request.use(async config => {
-  !config.isShowLoading && showLoading()
+
+const service = axios.create({
+  baseURL: baseURL,
+  headers: { 'Cache-Control': 'no-cache', 'BsmAjaxHeader': true },
+  timeout: 20000,
+  withCredentials: true
+})
+
+service.interceptors.request.use(config => {
+  !config.isHideLoading && showLoading()
   if (config.method === 'get') {
     // 清除get缓存
-    config.url = `${config.url}?t=${new Date().getTime()}`
+    config.url = `${config.url}?t=${new Date().getTime()}`;
   }
-  return config
-}, error => {
-  hideLoading()
-  return Promise.reject(error)
+  return config;
+}, err => {
+  return Promise.reject(err)
 })
-axiosInstance.interceptors.response.use(data => {
-  !data.config.isShowLoading && hideLoading()
-  const responseData = data.data
-  const options = data.config.options || {}
-  if (!responseData.success) {
-    if (responseData.status === 401 || responseData.status === 509) {
-      MessageBox('您已被登出，可以取消继续停留在当前页面，或者重新登录 ', '提示', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        location.href = '/'
-      })
-    } else if (!options.ignoreError) {
-      Notification({
-        message: responseData.message,
-        type: 'error'
-      })
+
+service.interceptors.response.use(
+  response => {
+    !response.config.isHideLoading && hideLoading()
+    const res = response.data
+    if (!res.success) {
+      notification.error({
+        message: response.config.url,
+        description: res.message,
+      });
     }
+    return res
+  },
+  error => {
+    hideLoading()
+    handleError(error.response)
+    return Promise.reject(error)
   }
-  return responseData
-}, error => {
-  hideLoading()
-  handleError(error.response)
-  return Promise.reject(error)
-})
-export default axiosInstance
+)
+export default service
