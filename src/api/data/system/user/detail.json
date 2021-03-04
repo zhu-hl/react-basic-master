@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "查询用户详情成功",
+  "data": {
+    "userId": "HZ14272",
+    "username": "zhl",
+    "sex": "01",
+    "phone": "15913232122",
+    "roleName": "超级管理员",
+    "email": "15913232122@163.com",
+    "remark": "test user"
+  }
+}

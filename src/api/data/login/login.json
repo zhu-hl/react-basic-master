@@ -1,0 +1,102 @@
+{
+  "success": true,
+  "message": "用户登录成功",
+  "errorMsg": null,
+  "data": {
+    "apiKey": "-58ea38c2a8233763596fa46e9a7f1d668ce506e",
+    "secKey": "bb062759d1599c9e3b5cb2795df75adabdda113",
+    "authApi": [],
+    "auths": [
+      {
+        "name": "系统管理",
+        "actionUrl": "/system",
+        "icon": "el-icon-setting",
+        "id": 1,
+        "priority": 1,
+        "parentId": 0,
+        "children": [
+          {
+            "children": null,
+            "name": "用户管理",
+            "actionUrl": "/system/user",
+            "icon": "",
+            "id": 11,
+            "priority": 1,
+            "parentId": 1
+          },
+          {
+            "children": null,
+            "name": "角色管理",
+            "actionUrl": "/system/role",
+            "icon": "",
+            "id": 12,
+            "priority": 2,
+            "parentId": 1
+          }
+        ]
+      },
+      {
+        "children": null,
+        "name": "资源概览",
+        "actionUrl": "/dashboard",
+        "icon": "el-icon-school",
+        "id": 2,
+        "priority": 1,
+        "parentId": 0
+      }
+    ],
+    "roles": [{
+      "gmtModify": "2018-05-04 13:00:00",
+      "remark": "系统管理员",
+      "gmtCreate": "2018-05-04 13:00:00",
+      "ownerId": null,
+      "menderId": 1,
+      "props": "无",
+      "deleted": false,
+      "name": "系统管理员",
+      "tenantId": 0,
+      "checked": false,
+      "createrId": 1,
+      "id": 1,
+      "status": "NORMAL"
+    }],
+    "user": {
+      "gmtModify": "2018-07-10 22:34:50",
+      "admin": false,
+      "remark": "发",
+      "projectIds": null,
+      "ownerId": null,
+      "password": "-2f53c5c689da716d2e390ddd10638fdb1aaef3e6",
+      "tenantName": null,
+      "isTenant": false,
+      "departId": 210,
+      "checked": null,
+      "company": "的发",
+      "createrId": 1,
+      "id": 291,
+      "email": "www.1325778864@qq.com",
+      "departName": null,
+      "sex": false,
+      "mobile": "13212345678",
+      "departIds": "[210]",
+      "sessionId": "94C9EB8A20D711532FB3244068D77401",
+      "gmtCreate": "2018-07-10 22:34:50",
+      "loginStatus": true,
+      "menderId": 1,
+      "userId": "3333",
+      "props": null,
+      "deleted": false,
+      "phone": "010-8888888",
+      "name": "上官凌益",
+      "tenantId": 0,
+      "roleNames": null,
+      "projectId": null,
+      "tenantIds": null,
+      "status": "NORMAL",
+      "userName": "qw"
+    }
+  },
+  "status": null,
+  "solution": null,
+  "failed": false
+}

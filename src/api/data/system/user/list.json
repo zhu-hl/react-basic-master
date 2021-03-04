@@ -1,0 +1,37 @@
+{
+  "success": true,
+  "message": "查询用户列表成功",
+  "data": {
+    "list":[
+      {
+        "userId": "HZ14272",
+        "username": "zhl",
+        "sex": "01",
+        "phone": "15913232122",
+        "email": "15913232122@163.com",
+        "roleName": "超级管理员",
+        "remark": "test user"
+      },
+      {
+        "userId": "ZW14271",
+        "username": "zw",
+        "sex": "02",
+        "phone": "13146267122",
+        "email": "13146267122@163.com",
+        "roleName": "普通管理员",
+        "remark": "test manager"
+      },
+      {
+        "userId": "QWE1312",
+        "username": "adascz",
+        "sex": "01",
+        "phone": "17898232122",
+        "email": "17898232122@163.com",
+        "roleName": "部门经理",
+        "remark": "test project manager"
+      }
+    ],
+    "total": 2,
+    "pageNumber": 1
+  }
+}
